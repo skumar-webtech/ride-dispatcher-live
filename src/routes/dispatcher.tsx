@@ -287,7 +287,7 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-border bg-card p-4">
+    <div className="rounded-xl border border-border bg-card/70 backdrop-blur-sm p-4 card-glow">
       <div className="mb-3 text-sm font-semibold text-foreground">{title}</div>
       {children}
     </div>
