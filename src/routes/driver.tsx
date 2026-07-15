@@ -363,7 +363,7 @@ function OfferCard({
   }, []);
 
   return (
-    <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-4 animate-in fade-in slide-in-from-top-2">
+    <div className="rounded-xl border border-amber-500/50 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-4 animate-in fade-in slide-in-from-top-2 animate-glow-pulse">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1">
           <div className="text-xs uppercase tracking-wider text-amber-400">
