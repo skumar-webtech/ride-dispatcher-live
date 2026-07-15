@@ -198,9 +198,8 @@ function DispatcherPage() {
               </thead>
               <tbody>
                 {ridesList.map((r) => (
-                  <>
+                  <Fragment key={r.id}>
                     <tr
-                      key={r.id}
                       onClick={() =>
                         setExpanded(expanded === r.id ? null : r.id)
                       }
@@ -227,7 +226,7 @@ function DispatcherPage() {
                         </td>
                       </tr>
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </tbody>
             </table>
