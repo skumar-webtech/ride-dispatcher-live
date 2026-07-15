@@ -154,6 +154,10 @@ export function Radar({
               : "#10b981";
         return (
           <g key={p.id} opacity={clamped ? 0.5 : 1}>
+            <circle cx={cx} cy={cy} r={9} fill={color} opacity={0.18}>
+              <animate attributeName="r" values="7;12;7" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.25;0.05;0.25" dur="2s" repeatCount="indefinite" />
+            </circle>
             <circle cx={cx} cy={cy} r={5} fill={color} />
             {p.label && (
               <text
@@ -169,6 +173,7 @@ export function Radar({
           </g>
         );
       })}
+
       <text
         x={12}
         y={size - 12}
