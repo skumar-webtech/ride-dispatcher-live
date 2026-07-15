@@ -120,14 +120,18 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <SocketProvider>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col aurora-bg">
           <ModeSwitcher />
-          <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-6">
+          <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-6 animate-fade-up">
             <Outlet />
           </main>
+          <footer className="border-t border-border/60 py-4 text-center text-xs text-muted-foreground font-mono">
+            RideDispatch · live ops demo · built with TanStack Start + Socket.IO
+          </footer>
         </div>
         <Toaster theme="dark" position="top-right" richColors />
       </SocketProvider>
     </QueryClientProvider>
   );
 }
+

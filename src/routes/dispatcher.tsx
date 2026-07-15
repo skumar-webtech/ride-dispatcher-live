@@ -173,7 +173,7 @@ function DispatcherPage() {
         </div>
         <button
           onClick={loadTest}
-          className="rounded-md bg-amber-500 px-4 py-2 text-sm font-semibold text-black hover:bg-amber-400"
+          className="rounded-md bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-2 shadow-lg shadow-amber-500/20 transition-all hover:shadow-amber-500/40 hover:-translate-y-0.5 text-sm font-semibold text-black "
         >
           Run load test (5 drivers + 1 ride)
         </button>
@@ -287,7 +287,7 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-border bg-card p-4">
+    <div className="rounded-xl border border-border bg-card/70 backdrop-blur-sm p-4 card-glow">
       <div className="mb-3 text-sm font-semibold text-foreground">{title}</div>
       {children}
     </div>

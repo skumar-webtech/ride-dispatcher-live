@@ -51,8 +51,28 @@ export function Radar({
           <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.08" />
           <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
         </radialGradient>
+        <radialGradient id="radar-sweep-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.0" />
+          <stop offset="70%" stopColor="#f59e0b" stopOpacity="0.0" />
+          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.35" />
+        </radialGradient>
+        <radialGradient id="pickup-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+        </radialGradient>
       </defs>
       <rect width={size} height={size} fill="url(#radar-grad)" />
+
+      {/* Rotating sweep beam (only while searching) */}
+      {searching && (
+        <g style={{ transformOrigin: `${half}px ${half}px` }} className="animate-radar-sweep">
+          <path
+            d={`M ${half} ${half} L ${half + (half - 10)} ${half} A ${half - 10} ${half - 10} 0 0 0 ${half - (half - 10) * 0.5} ${half - (half - 10) * 0.87} Z`}
+            fill="url(#radar-sweep-grad)"
+          />
+        </g>
+      )}
+
       {rings.map((r, i) => (
         <circle
           key={i}
@@ -70,6 +90,22 @@ export function Radar({
           }
         />
       ))}
+
+      {/* Ripple waves during SEARCHING */}
+      {searching && [0, 0.7, 1.4].map((delay, i) => (
+        <circle
+          key={`ripple-${i}`}
+          cx={half}
+          cy={half}
+          r={half - 10}
+          fill="none"
+          stroke="#f59e0b"
+          strokeWidth={1.5}
+          className="animate-ripple"
+          style={{ animationDelay: `${delay}s`, transformOrigin: `${half}px ${half}px` }}
+        />
+      ))}
+
       {/* crosshairs */}
       <line
         x1={half}
@@ -89,16 +125,20 @@ export function Radar({
         strokeOpacity="0.08"
         className="text-muted-foreground"
       />
-      {/* center pickup */}
-      <circle cx={half} cy={half} r={6} fill="var(--color-primary)" />
+      {/* center pickup with soft glow */}
+      <circle cx={half} cy={half} r={22} fill="url(#pickup-glow)" />
+      <circle cx={half} cy={half} r={6} fill="#f59e0b">
+        <animate attributeName="r" values="6;8;6" dur="1.8s" repeatCount="indefinite" />
+      </circle>
       <circle
         cx={half}
         cy={half}
         r={10}
         fill="none"
-        stroke="var(--color-primary)"
-        strokeOpacity="0.4"
+        stroke="#f59e0b"
+        strokeOpacity="0.5"
       />
+
 
       {points.map((p) => {
         const { x, y } = project(p.lat, p.lng);
@@ -114,6 +154,10 @@ export function Radar({
               : "#10b981";
         return (
           <g key={p.id} opacity={clamped ? 0.5 : 1}>
+            <circle cx={cx} cy={cy} r={9} fill={color} opacity={0.18}>
+              <animate attributeName="r" values="7;12;7" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.25;0.05;0.25" dur="2s" repeatCount="indefinite" />
+            </circle>
             <circle cx={cx} cy={cy} r={5} fill={color} />
             {p.label && (
               <text
@@ -129,6 +173,7 @@ export function Radar({
           </g>
         );
       })}
+
       <text
         x={12}
         y={size - 12}
